@@ -13,8 +13,8 @@ export class BasicLineEchartsComponent implements OnInit {
 
   _chartOption: EChartOption;
   subscription: Subscription;
-  isDarkMode : boolean = false;
-  _theme : string;
+  isDarkMode: boolean = false;
+  _theme: string;
   constructor(private echartService: EchartService) { }
 
   ngOnInit(): void {
@@ -32,7 +32,7 @@ export class BasicLineEchartsComponent implements OnInit {
       tooltip: {
         show: true
       },
-      background: 'transparent',
+      // background: 'transparent',
       xAxis: {
         type: 'category',
         data: chartData.map(m => ({
