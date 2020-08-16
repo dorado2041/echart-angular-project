@@ -1,44 +1,43 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { EChartOption } from 'echarts';
 import { EchartService } from 'src/app/common/service/echart.service';
 import { BasicEchartLineModel } from 'src/app/common/model/echart.model';
+import { EChartOption } from 'echarts';
 
 @Component({
-  selector: 'app-basic-line-echarts',
-  templateUrl: './basic-line-echarts.component.html',
-  styleUrls: ['./basic-line-echarts.component.scss']
+  selector: 'app-smoothed-line-echarts',
+  templateUrl: './smoothed-line-echarts.component.html',
+  styleUrls: ['./smoothed-line-echarts.component.scss']
 })
-export class BasicLineEchartsComponent implements OnInit, OnDestroy {
+export class SmoothedLineEchartsComponent implements OnInit, OnDestroy{
 
   _chartOption: EChartOption;
   subscription: Subscription;
-  isDarkMode: boolean = false;
   _theme: string;
+  _isDarkmode: boolean = false;
   constructor(private echartService: EchartService) { }
 
   ngOnInit(): void {
-    this.subscription = this.echartService.getbasicLineEchartData().subscribe(data => {
-      this._initBasicLineEchart(data);
+    this.subscription = this.echartService.getbasicSmoothedEchartData().subscribe(data => {
+      this._initSmoothedEchart(data);
     });
-
   }
 
-  ngOnDestroy() {
-    if (this.subscription) {
+  ngOnDestroy(){
+    if(this.subscription){
       this.subscription.unsubscribe();
     }
   }
 
-  private _initBasicLineEchart(chartData: BasicEchartLineModel[]) {
+  private _initSmoothedEchart(chartData: BasicEchartLineModel[]) {
 
-    this._theme = this.isDarkMode ? 'dark' : '';
+    this._theme = this._isDarkmode ? 'dark' : '';
 
     this._chartOption = {
+
       tooltip: {
         show: true
       },
-      // background: 'transparent',
       xAxis: {
         type: 'category',
         data: chartData.map(m => ({
@@ -48,13 +47,15 @@ export class BasicLineEchartsComponent implements OnInit, OnDestroy {
       yAxis: {
         type: 'value'
       },
+
       series: [{
         data: chartData.map(m => ({
           value: m.value
         })),
-        type: 'line'
+        type: 'line',
+        smooth: true
       }]
-    };
-  }
 
+    }
+  }
 }

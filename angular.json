@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "angular-advance"
+  "defaultProject": "angular-advance",
+  "cli": {
+    "analytics": false
+  }
 }

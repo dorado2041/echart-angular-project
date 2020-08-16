@@ -1,14 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { BasicLineEchartsComponent } from './echarts/line/basic-line-echarts/basic-line-echarts.component';
 
-
-const routes: Routes = [
-  {
-    path: 'basic-line-echart',
-    component: BasicLineEchartsComponent
-  }
-];
+const routes: Routes = [];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -1,27 +1,26 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { EChartOption } from 'echarts';
 import { EchartService } from 'src/app/common/service/echart.service';
 import { BasicEchartLineModel } from 'src/app/common/model/echart.model';
+import { EChartOption } from 'echarts';
 
 @Component({
-  selector: 'app-basic-line-echarts',
-  templateUrl: './basic-line-echarts.component.html',
-  styleUrls: ['./basic-line-echarts.component.scss']
+  selector: 'app-basic-area-echarts',
+  templateUrl: './basic-area-echarts.component.html',
+  styleUrls: ['./basic-area-echarts.component.scss']
 })
-export class BasicLineEchartsComponent implements OnInit, OnDestroy {
+export class BasicAreaEchartsComponent implements OnInit, OnDestroy {
 
   _chartOption: EChartOption;
   subscription: Subscription;
-  isDarkMode: boolean = false;
+  _isDarkMode: boolean = false;
   _theme: string;
-  constructor(private echartService: EchartService) { }
+  constructor(private echartSevrice: EchartService) { }
 
   ngOnInit(): void {
-    this.subscription = this.echartService.getbasicLineEchartData().subscribe(data => {
-      this._initBasicLineEchart(data);
-    });
-
+    this.subscription = this.echartSevrice.getbasicAreaEchartData().subscribe(data => {
+      this._initBasicAreaEcharts(data);
+    })
   }
 
   ngOnDestroy() {
@@ -30,15 +29,14 @@ export class BasicLineEchartsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private _initBasicLineEchart(chartData: BasicEchartLineModel[]) {
+  private _initBasicAreaEcharts(chartData: BasicEchartLineModel[]) {
 
-    this._theme = this.isDarkMode ? 'dark' : '';
+    this._theme = this._isDarkMode ? 'dark' : '';
 
     this._chartOption = {
       tooltip: {
         show: true
       },
-      // background: 'transparent',
       xAxis: {
         type: 'category',
         data: chartData.map(m => ({
@@ -52,9 +50,10 @@ export class BasicLineEchartsComponent implements OnInit, OnDestroy {
         data: chartData.map(m => ({
           value: m.value
         })),
-        type: 'line'
+        type: 'line',
+        areaStyle: {}
       }]
-    };
+    }
   }
 
 }
